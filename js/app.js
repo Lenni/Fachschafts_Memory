@@ -100,16 +100,19 @@ class GameState{
     recieve(data){
         let ids = [];
         let contents = [];
+        let headers = [];
 
         for(let i = 0; i < data.cardDeck.card_no; i++){
-            ids.push(data.cardDeck.Cards[i].id)
-            contents.push(data.cardDeck.Cards[i].content)
+            ids.push(data.cardDeck.Cards[i].id);
+            contents.push(data.cardDeck.Cards[i].content);
+            headers.push(data.cardDeck.Cards[i].header);
         }
 
-        let cd = new CardDeck(ids, contents)
+        let cd = new CardDeck(ids, contents, headers);
 
 
         deck_holder.innerHTML = "";
+
         cd.generateDOM();
 
         for(let i = 0; i < data.cardDeck.card_no; i++){
@@ -148,7 +151,10 @@ let gameState = new GameState();
 
 class Card{
     id;
+
+    header;
     content;
+
     opened;
     DOMElement;
     matched;
@@ -156,25 +162,32 @@ class Card{
 
     owner = "";
 
-    constructor(id, content) {
+    constructor(id, content, header) {
         this.id = id;
         this.opened = false;
         this.matched = false;
         this.unmatched = false;
         this.content = content;
+        this.header = header;
     }
 
     generateDOM(){
         this.DOMElement = document.createElement("li");
 
-        let child = document.createElement("i");
-        let header = document.createElement("h6");
+        let content = document.createElement("div");
+        let header = document.createElement("i");
+        let name = document.createElement("h6");
 
-        header.innerText=this.owner;
-        child.innerText = this.content;
+        name.innerText=this.owner;
+        header.innerText = this.header;
+        content.innerText = this.content;
 
+        content.classList.add("description");
+
+        this.DOMElement.appendChild(name);
         this.DOMElement.appendChild(header);
-        this.DOMElement.appendChild(child)
+        this.DOMElement.appendChild(content);
+
 
         this.DOMElement.classList.add("card");
         this.DOMElement.id = "card_" + this.id
@@ -257,7 +270,7 @@ class Card{
         let header = document.createElement("h6");
 
         header.innerText=this.owner;
-        child.innerText = this.content;
+        child.innerHTML = this.content;
 
         this.DOMElement.appendChild(header);
         this.DOMElement.appendChild(child);
@@ -274,12 +287,12 @@ class CardDeck{
 
     DOMElement;
 
-    constructor(ids, contents) {
+    constructor(ids, contents, headers) {
         this.Cards = [];
         this.card_no = ids.length;
 
         for(let i = 0; i < this.card_no; i++){
-            this.Cards.push(new Card(ids[i], contents[i]));
+            this.Cards.push(new Card(ids[i], contents[i], headers[i]));
         }
     }
 
@@ -444,7 +457,8 @@ function joinGame(){
 
 function masterStart() {
 
-    let contents = ["Melone", "Melone", "Kiwi", "Kiwi", "Baguette", "Baguette"];
+    let headers = ["Melone", "Melone", "Kiwi", "Kiwi", "Baguette", "Baguette"];
+    let contents = ["Das ist eine Melone", "Das ist eine Melone", "Das ist eine Kiwi", "Das ist eine Kiwi", "Avec", "fromage"]
     let ids = [0, 1, 2, 3, 4, 5];
 
    /* for(let i = 0; i < 32; i++){
@@ -453,7 +467,7 @@ function masterStart() {
     }
     */
 
-    let cd = new CardDeck(ids, contents);
+    let cd = new CardDeck(ids, contents, headers);
 
     cd.shuffle();
     gameState.cardDeck = cd;
@@ -467,7 +481,6 @@ function masterStart() {
 
 // @description function to start a new play with pre shuffled cards
 function startGame(_cards) {
-
 
     deck_holder.innerHTML = "";
 
