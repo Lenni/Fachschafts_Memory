@@ -179,8 +179,8 @@ class Card{
         let name = document.createElement("h6");
 
         name.innerText=this.owner;
-        header.innerText = this.header;
-        content.innerText = this.content;
+        header.innerHTML = this.header;
+        content.innerHTML = this.content;
 
         content.classList.add("description");
 
