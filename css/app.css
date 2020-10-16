@@ -78,7 +78,7 @@ button {
 	margin-top: 10px;
 	margin-bottom: 50px;
 	text-align: center;
-	float: left;
+	float: none;
 	border-style: solid;
 	border-color: #ee6f57;
 	border-radius: 5px;
@@ -167,7 +167,7 @@ h1 {
 	justify-content: space-around;
 	align-items: center;
 	margin: auto;
-	margin-top: 400px;
+	margin-top: 700px;
 }
 
 @media only screen and (max-width: 1000px) {
