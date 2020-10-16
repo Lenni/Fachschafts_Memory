@@ -56,6 +56,25 @@ class GameState{
             this.turn = id;
         }
 
+        this.update_player_list();
+    }
+
+    remove_player(id, name){
+        const index = this.players.indexOf(name);
+        const order_index = this.order.indexOf(id);
+        if (index > -1) {
+            this.players.splice(index, 1);
+        }
+
+        if (index > -1){
+            this.order.splice(order_index, 1);
+        }
+
+        this.update_player_list()
+
+    }
+
+    update_player_list(){
         player_list.innerHTML = "";
 
         for(let i = 0; i < this.players.length; i++){
@@ -63,14 +82,6 @@ class GameState{
             player_label.innerText = this.players[i] + "\n";
             player_list.appendChild(player_label);
         }
-    }
-
-    remove_player(name){
-        const index = this.players.indexOf(name);
-        if (index > -1) {
-            this.players.splice(index, 1);
-        }
-
     }
 
     send(){
@@ -218,6 +229,8 @@ class Card{
 
             this.play_open_animation();
         }
+        disable();
+        setTimeout(function (){ enable()}, 1000);
     }
 
     play_open_animation(){
@@ -266,14 +279,19 @@ class Card{
 
         this.DOMElement.innerHTML = "";
 
-        let child = document.createElement("i");
-        let header = document.createElement("h6");
+        let content = document.createElement("div");
+        let header = document.createElement("i");
+        let name = document.createElement("h6");
 
-        header.innerText=this.owner;
-        child.innerHTML = this.content;
+        name.innerText=this.owner;
+        header.innerHTML = this.header;
+        content.innerHTML = this.content;
 
+        content.classList.add("description");
+
+        this.DOMElement.appendChild(name);
         this.DOMElement.appendChild(header);
-        this.DOMElement.appendChild(child);
+        this.DOMElement.appendChild(content);
     }
 }
 
@@ -312,7 +330,7 @@ class CardDeck{
             this.opened_cards[1].DOMElement.classList.add("prio");
 
             setTimeout(function (){
-            if (t.opened_cards[0].content === t.opened_cards[1].content) {
+            if (t.opened_cards[0].header === t.opened_cards[1].header) {
 
                 t.matched()
                 my_cards = 0;
@@ -377,6 +395,7 @@ class CardDeck{
         setTimeout(function () {
             c[0].play_cover_animation();
             c[1].play_cover_animation();
+            disable();
             c[0].unmatched= false;
             c[1].unmatched= false;
             t.opened_cards = [];
@@ -440,7 +459,46 @@ socket.on("join", function (data){
     gameState.sync();
 });
 
+socket.on("leave", function (data){
+    gameState.remove_player(data.id, data.name);
+    gameState.sync();
+});
+
+function leaveGame(){
+
+    let button = document.getElementById("join_leave");
+
+    document.getElementById("player-name").disabled = false;
+    document.getElementById("game-code").disabled = false;
+    button.classList.remove();
+
+    button.innerText = "Spiel betreten";
+    button.onclick = joinGame;
+
+    gameState.remove_player(player_id, player_name);
+
+    if(document.getElementById("game-code").value !== ""){
+        room = document.getElementById("game-code").value;
+    }else{
+        room = "default";
+    }
+
+    player_name = document.getElementById("player-name").value;
+
+    socket.emit("leave",{"id": player_id, "name": player_name, "room": room});
+}
+
 function joinGame(){
+
+    let button = document.getElementById("join_leave");
+
+    button.classList.remove();
+    document.getElementById("player-name").disabled = true;
+    document.getElementById("game-code").disabled = true;
+
+    button.innerText = "Spiel Verlassen";
+    button.onclick = leaveGame;
+
     if(document.getElementById("game-code").value !== ""){
         room = document.getElementById("game-code").value;
     }else{
