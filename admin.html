@@ -15,9 +15,10 @@
 <body>
 
 	<div class="admin_start_game">
-		<h1>Du bist Spielleiter.</h1>
-		<br>
-		<button id="Start_Game", onclick="masterStart()">Raum öffnen</button>
+		<span id="admintext">
+				<h1>Du bist Spielleiter.</h1>
+				<button id="Start_Game", onclick="masterStart()">Raum öffnen</button>
+		</span>
 	</div>
 
 
@@ -26,7 +27,7 @@
 			<div>
 				<div class="gametitle">
 					<h1><span id="memory">Memory</span><br><span id="unimu">Erstiwoche <b>Uni Münster</b></span></h1>
-					<span id="subtitle">Präsentiert von <b>Wir hassen Stanislaus e.V.</b></span>
+					<span id="subtitle">Wir wünschen Euch viel Spaß!</b></span>
 				</div>
 
 				<div class="controls">
@@ -46,7 +47,7 @@
 		</div>
 	</header>
 
-	<div>
+	<div class="game">
 		<div id="card-deck-placeholder"></div>
 		
 		<div class="container">
