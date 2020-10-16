@@ -1,4 +1,5 @@
 <!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -12,77 +13,54 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="row align-content-end">
-                <div class="col-6 align-content-end">
-                    <h1>Memory Game</h1>
-                </div>
+	<header>
+		<div class="container">
+			<div>
+				<div class="gametitle">
+					<h1><b>Memory</b><br> Erstiwoche <b>Uni Münster</b></h1>
+				</div>
 
-                <div class="col-4">
-                    <form class="form-inline justify-content-end">
-                    <div class="form-group">
-                        <label class="sr-only">Name:</label>
-                        <h2>Name: </h2><input type="text" class="form-control" placeholder="" id="player-name">
-                    </div>
-                    <div class="form-group">
-                        <label class="sr-only">Game Code</label>
-                        <h2>Game Code: </h2><input type="text" class="form-control" placeholder="" id="game-code">
-                    </div>
-                        <button type="button" class="btn btn-success" onclick="joinGame()">Spielen!</button>
-                </form>
-                </div>
-            </div>
-        </div>
-    </header>
+				<div class="controls">
+					<form>
+						<div class="form-group">
+							<label class="sr-only">Name:</label>
+							Name: <input type="text" class="form-control" placeholder="" id="player-name">
+						</div>
+						<div class="form-group">
+							<label class="sr-only">Game Code</label>
+							Game Code: <input type="text" class="form-control" placeholder="" id="game-code">
+						</div>
+						<button type="button" class="btn btn-success" onclick="joinGame()">Spielen</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <section class="score-panel">
-                <ul class="stars">
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
-                </ul>
-
-                <span class="moves">0</span> Move(s)
-
-                <div class="timer">
-                </div>
-
-                <div class="restart" onclick=startGame()>
-                    <i class="fa fa-repeat"></i>
-                </div>
-            </section>
-        </div>
-        <div class="row text-center align-content-center justify-content-center">
-            <div id="card-deck-placeholder">
-
-            </div>
-        </div>
+	<div>
+		<div id="card-deck-placeholder"></div>
+		<div class="mitspieler">
+			<h2>Mitspieler:</h2>
+			<ul id="player-list"></ul>
+		</div>
 
 
-        <div id="popup1" class="overlay">
-            <div class="popup">
-                <h2>Congratulations 🎉</h2>
-                <a class="close" href=# >×</a>
-                <div class="content-1">
-                    Congratulations you're a winner 🎉🎉
-                </div>
-                <div class="content-2">
-                    <p>You made <span id=finalMove> </span> moves </p>
-                    <p>in <span id=totalTime> </span> </p>
-                    <p>Rating:  <span id=starRating></span></p>
-                </div>
-                <button id="play-again"onclick="playAgain()">
-                    Play again 😄</a>
-                </button>
-            </div>
-        </div>
+		<div id="popup1" class="overlay">
+			<div class="popup">
+				<h2>Herzlichen Glückwunsch 🎉</h2>
+				<a class="close" href=# >×</a>
+				<div class="content-1">
+					Du hast gewonnen! 🎉🎉
+				</div>
+				<button id="play-again"onclick="playAgain()">
+					Noch mal 😄</a>
+				</button>
+			</div>
+		</div>
 
-    </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
-    <script src="js/app.js"></script>
+	</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

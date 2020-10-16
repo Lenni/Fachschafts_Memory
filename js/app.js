@@ -490,7 +490,7 @@ function startGame(_cards) {
 
     // reset moves
     moves = 0;
-    counter.innerHTML = moves;
+    //counter.innerHTML = moves;
 
     let timer = document.querySelector(".timer");
     timer.innerHTML = "0 mins 0 secs";
