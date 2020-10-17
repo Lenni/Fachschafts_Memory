@@ -179,12 +179,12 @@ let headers = [header_card_1_A, header_card_1_B, header_card_2_A, header_card_2_
  header_card_16_A, header_card_16_B, header_card_17_A, header_card_17_B, header_card_18_A, header_card_18_B, header_card_19_A, header_card_19_B, header_card_20_A, header_card_20_B,
  header_card_21_A, header_card_21_B, header_card_22_A, header_card_22_B, header_card_23_A, header_card_23_B, header_card_24_A, header_card_24_B, header_card_25_A, header_card_25_B,
  header_card_26_A, header_card_26_B, header_card_27_A, header_card_27_B, header_card_28_A, header_card_28_B ]
-let contents = [header_card_1_A, header_card_1_B, header_card_2_A, header_card_2_B, header_card_3_A, header_card_3_B, header_card_4_A, header_card_4_B, header_card_5_A, header_card_5_B,
- header_card_6_A, header_card_6_B, header_card_7_A, header_card_7_B, header_card_8_A, header_card_8_B, header_card_9_A, header_card_9_B, header_card_10_A, header_card_10_B,
- header_card_11_A, header_card_11_B, header_card_12_A, header_card_12_B, header_card_13_A, header_card_13_B, header_card_14_A, header_card_14_B, header_card_15_A, header_card_15_B,
- header_card_16_A, header_card_16_B, header_card_17_A, header_card_17_B, header_card_18_A, header_card_18_B, header_card_19_A, header_card_19_B, header_card_20_A, header_card_20_B,
- header_card_21_A, header_card_21_B, header_card_22_A, header_card_22_B, header_card_23_A, header_card_23_B, header_card_24_A, header_card_24_B, header_card_25_A, header_card_25_B,
- header_card_26_A, header_card_26_B, header_card_27_A, header_card_27_B, header_card_28_A, header_card_28_B ];
+let contents = [content_card_1_A, content_card_1_B, content_card_2_A, content_card_2_B, content_card_3_A, content_card_3_B, content_card_4_A, content_card_4_B, content_card_5_A, content_card_5_B,
+ content_card_6_A, content_card_6_B, content_card_7_A, content_card_7_B, content_card_8_A, content_card_8_B, content_card_9_A, content_card_9_B, content_card_10_A, content_card_10_B,
+ content_card_11_A, content_card_11_B, content_card_12_A, content_card_12_B, content_card_13_A, content_card_13_B, content_card_14_A, content_card_14_B, content_card_15_A, content_card_15_B,
+ content_card_16_A, content_card_16_B, content_card_17_A, content_card_17_B, content_card_18_A, content_card_18_B, content_card_19_A, content_card_19_B, content_card_20_A, content_card_20_B,
+ content_card_21_A, content_card_21_B, content_card_22_A, content_card_22_B, content_card_23_A, content_card_23_B, content_card_24_A, content_card_24_B, content_card_25_A, content_card_25_B,
+ content_card_26_A, content_card_26_B, content_card_27_A, content_card_27_B, content_card_28_A, content_card_28_B ];
 
 let ids = [];
 
