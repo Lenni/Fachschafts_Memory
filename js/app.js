@@ -16,7 +16,7 @@ let closeicon = document.querySelector(".close");
 let modal = document.getElementById("popup1")
 
 
-let player_id = Math.round($.now() * Math.random());
+let player_id = Math.round(Date.now() * Math.random());
 let player_name;
 let room = "default";
 
@@ -34,14 +34,16 @@ class GameState{
     players;
     order;
     turn;
+    active;
 
     constructor() {
         this.moves = 0;
         this.game_start = false;
-        this.timestamp = $.now();
+        this.timestamp = Date.now();
         this.turn = 0;
         this.players = [];
         this.order = [];
+        this.active = {};
     }
 
     sync(){
@@ -62,6 +64,7 @@ class GameState{
     remove_player(id, name){
         const index = this.players.indexOf(name);
         const order_index = this.order.indexOf(id);
+
         if (index > -1) {
             this.players.splice(index, 1);
         }
@@ -72,6 +75,18 @@ class GameState{
 
         this.update_player_list()
 
+    }
+
+    purge_inactive(){
+        if(this.players !== undefined){
+            for(let i = 0; i < this.players.length; i++){
+                let player = this.players[i];
+
+                if(this.active[player.id] + 10000 > Date.now()){
+                    this.remove_player(player.id, player.name);
+                }
+            }
+        }
     }
 
     update_player_list(){
@@ -132,6 +147,7 @@ class GameState{
                 cd.Cards[i].matched = data.cardDeck.Cards[i].matched;
                 cd.Cards[i].unmatched = data.cardDeck.Cards[i].unmatched;
                 cd.Cards[i].owner = data.cardDeck.Cards[i].owner;
+                cd.Cards[i].partner_id = data.cardDeck.Cards[i].partner_id;
 
                 if(cd.Cards[i].matched){
                     cd.matched_cards.push(cd.Cards[i]);
@@ -182,6 +198,7 @@ let gameState = new GameState();
 
 class Card{
     id;
+    partner_id;
 
     header;
     content;
@@ -332,6 +349,11 @@ class CardDeck{
         for(let i = 0; i < this.card_no; i++){
             this.Cards.push(new Card(ids[i], contents[i], headers[i]));
         }
+
+        for(let i = 0; i < this.card_no/2 ; i++){
+            this.Cards[i*2].partner_id = this.Cards[i*2 + 1].id;
+            this.Cards[i*2 +1].partner_id = this.Cards[i*2].id;
+        }
     }
 
     open_card(id, sync){
@@ -350,7 +372,7 @@ class CardDeck{
             this.opened_cards[1].DOMElement.classList.add("prio");
 
             setTimeout(function (){
-            if (Math.abs(t.opened_cards[0].id - t.opened_cards[1].id) === 1) {
+            if (t.opened_cards[0].id === t.opened_cards[1].partner_id) {
 
                 t.matched()
                 my_cards = 0;
@@ -359,7 +381,6 @@ class CardDeck{
                         my_cards++;
                     }
                 }
-                counter.innerHTML = my_cards;
             } else {
                 t.unmatched();
             }
@@ -462,8 +483,7 @@ class CardDeck{
 
 
 
-// @description shuffles cards when page is refreshed / loads
-//document.body.onload = startGame();
+setInterval(gameState.purge_inactive, 5000);
 
 socket.on("sync", function (data){
     console.log(data)
@@ -474,6 +494,10 @@ socket.on("start", function (data){
     startGame(gameState.cardDeck);
 });
 
+socket.on("alive", function(data){
+    console.log(data)
+    gameState.active[data.id] = data.timestamp;
+});
 
 
 socket.on("join", function (data){
@@ -534,6 +558,8 @@ function joinGame(){
     player_name = document.getElementById("player-name").value;
 
     socket.emit("join",{"id": player_id, "name": player_name, "room": room});
+
+    setInterval(sendKeepalive, 10000);
 }
 
 
@@ -576,13 +602,12 @@ function startGame(_cards) {
     // reset moves
     moves = 0;
     //counter.innerHTML = moves;
-    clearInterval(interval);
 
     gameState.sync();
 }
 
-function updateScreen(){
-
+function sendKeepalive(){
+    socket.emit("alive", {"id": player_id, "room": room, "timestamp": Date.now()});
 }
 
 // @description add opened cards to OpenedCards list and check if cards are match or not
