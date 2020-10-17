@@ -113,45 +113,65 @@ class GameState{
         let contents = [];
         let headers = [];
 
-        for(let i = 0; i < data.cardDeck.card_no; i++){
-            ids.push(data.cardDeck.Cards[i].id);
-            contents.push(data.cardDeck.Cards[i].content);
-            headers.push(data.cardDeck.Cards[i].header);
-        }
-
-        let cd = new CardDeck(ids, contents, headers);
-
-
-        deck_holder.innerHTML = "";
-
-        cd.generateDOM();
-
-        for(let i = 0; i < data.cardDeck.card_no; i++){
-            cd.Cards[i].opened = data.cardDeck.Cards[i].opened;
-            cd.Cards[i].matched = data.cardDeck.Cards[i].matched;
-            cd.Cards[i].unmatched = data.cardDeck.Cards[i].unmatched;
-            cd.Cards[i].owner = data.cardDeck.Cards[i].owner;
-
-            if(cd.Cards[i].matched){
-                cd.matched_cards.push(cd.Cards[i]);
+        try{
+            for(let i = 0; i < data.cardDeck.card_no; i++){
+                ids.push(data.cardDeck.Cards[i].id);
+                contents.push(data.cardDeck.Cards[i].content);
+                headers.push(data.cardDeck.Cards[i].header);
             }
+
+            let cd = new CardDeck(ids, contents, headers);
+
+
+            deck_holder.innerHTML = "";
+
+            cd.generateDOM();
+
+            for(let i = 0; i < data.cardDeck.card_no; i++){
+                cd.Cards[i].opened = data.cardDeck.Cards[i].opened;
+                cd.Cards[i].matched = data.cardDeck.Cards[i].matched;
+                cd.Cards[i].unmatched = data.cardDeck.Cards[i].unmatched;
+                cd.Cards[i].owner = data.cardDeck.Cards[i].owner;
+
+                if(cd.Cards[i].matched){
+                    cd.matched_cards.push(cd.Cards[i]);
+                }
+            }
+
+            deck_holder.innerHTML = "";
+            cd.generateDOM();
+
+            this.cardDeck = cd;
+
+        } catch (e){
+            console.log(e)
         }
 
-        deck_holder.innerHTML = "";
-        cd.generateDOM();
-
-        this.cardDeck = cd;
         this.moves = data.moves;
+        this.players = data.players;
         this.turn = data.turn;
         this.order = data.order;
         this.game_start = data.game_start;
 
-        deck_holder.appendChild(this.cardDeck.DOMElement);
 
-        if(player_id === gameState.turn){
-            enable();
-        }else{
-            disable();
+        this.updateUI();
+
+    }
+
+    updateUI(){
+
+        this.update_player_list();
+
+        if(this.cardDeck !== undefined){
+            deck_holder.innerHTML = "";
+            this.cardDeck.generateDOM();
+            deck_holder.appendChild(this.cardDeck.DOMElement);
+
+            if(player_id === gameState.turn){
+                enable();
+            }else{
+                disable();
+            }
         }
 
     }
@@ -330,7 +350,7 @@ class CardDeck{
             this.opened_cards[1].DOMElement.classList.add("prio");
 
             setTimeout(function (){
-            if (t.opened_cards[0].header === t.opened_cards[1].header) {
+            if (Math.abs(t.opened_cards[0].id - t.opened_cards[1].id) === 1) {
 
                 t.matched()
                 my_cards = 0;
@@ -422,6 +442,7 @@ class CardDeck{
             this.Cards[i].DOMElement.addEventListener("click", cardOpen);
             this.DOMElement.appendChild(this.Cards[i].DOMElement)
         }
+
     }
 
     shuffle() {
@@ -449,6 +470,7 @@ socket.on("sync", function (data){
     gameState.recieve(data)});
 
 socket.on("start", function (data){
+    gameState.game_start = true;
     startGame(gameState.cardDeck);
 });
 
@@ -456,12 +478,16 @@ socket.on("start", function (data){
 
 socket.on("join", function (data){
     gameState.add_player(data.id, data.name);
-    gameState.sync();
+    setTimeout(function (){
+        gameState.sync();
+    }, 200);
 });
 
 socket.on("leave", function (data){
     gameState.remove_player(data.id, data.name);
-    gameState.sync();
+    setTimeout(function (){
+        gameState.sync();
+    }, 200);
 });
 
 function leaveGame(){
@@ -515,9 +541,9 @@ function joinGame(){
 
 function masterStart() {
 
-    let headers = ["Melone", "Melone", "Kiwi", "Kiwi", "Baguette", "Baguette"];
-    let contents = ["Das ist eine Melone", "Das ist eine Melone", "Das ist eine Kiwi", "Das ist eine Kiwi", "Avec", "fromage"]
-    let ids = [0, 1, 2, 3, 4, 5];
+    //let headers = ["Melone", "Melone", "Kiwi", "Kiwi", "Baguette", "Baguette"];
+    //let contents = ["Das ist eine Melone", "Das ist eine Melone", "Das ist eine Kiwi", "Das ist eine Kiwi", "Avec", "fromage"]
+    //let ids = [0, 1, 2, 3, 4, 5];
 
    /* for(let i = 0; i < 32; i++){
         contents.push(Math.round(i/2))
@@ -529,6 +555,7 @@ function masterStart() {
 
     cd.shuffle();
     gameState.cardDeck = cd;
+    gameState.game_start = true;
     gameState.sync();
 
     socket.emit("start", {"room": room});
@@ -549,9 +576,6 @@ function startGame(_cards) {
     // reset moves
     moves = 0;
     //counter.innerHTML = moves;
-
-    let timer = document.querySelector(".timer");
-    timer.innerHTML = "0 mins 0 secs";
     clearInterval(interval);
 
     gameState.sync();
@@ -589,67 +613,4 @@ function enable() {
             card.DOMElement.classList.add('disabled');
         }
     });
-}
-
-// @description game timer
-second = 0;
-minute = 0;
-hour = 0;
-const timer = document.querySelector(".timer");
-var interval;
-
-function startTimer() {
-    interval = setInterval(function () {
-        timer.innerHTML = minute + "mins " + second + "secs";
-        second++;
-        if (second == 60) {
-            minute++;
-            second = 0;
-        }
-        if (minute == 60) {
-            hour++;
-            minute = 0;
-        }
-    }, 1000);
-}
-
-
-// @description congratulations when all cards match, show modal and moves, time and rating
-function congratulations() {
-    let finalTime;
-
-    if (matchedCard.length === 16) {
-        clearInterval(interval);
-        finalTime = timer.innerHTML;
-
-        // show congratulations modal
-        modal.classList.add("show");
-
-        // declare star rating variable
-        var starRating = document.querySelector(".stars").innerHTML;
-
-        //showing move, rating, time on modal
-        document.getElementById("finalMove").innerHTML = moves;
-        document.getElementById("starRating").innerHTML = starRating;
-        document.getElementById("totalTime").innerHTML = finalTime;
-
-        //closeicon on modal
-        closeModal();
-    }
-}
-
-
-// @description close icon on modal
-function closeModal() {
-    closeicon.addEventListener("click", function (e) {
-        modal.classList.remove("show");
-        startGame();
-    });
-}
-
-
-// @desciption for user to play Again 
-function playAgain() {
-    modal.classList.remove("show");
-    masterStart();
 }
