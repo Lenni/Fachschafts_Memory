@@ -41,6 +41,12 @@ io.sockets.on('connection', function (socket) {
       socket.to(data.room).broadcast.emit('sync', data);
     });
 
+    socket.on('alive', function (data){
+        console.log("Keepalive");
+        console.log(data);
+        io.in(data.room).emit('alive', data);
+    });
+
     socket.on('start', function (data) {
         console.log("Start Game!");
         console.log(data);
