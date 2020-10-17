@@ -97,7 +97,7 @@ let content_card_15_B = "<img src='img/Fl018.jpeg'>" ;
 //------------------ KARTE 16 -----------------------
 let header_card_16_A = "<strong> Leo 17.21 (oder Leo 21) </strong>";
 let header_card_16_B = "<strong> Vorlesungssaal Leonardocampus 17 </strong>";
-let content_card_16A = "";
+let content_card_16_A = "";
 let content_card_16_B = "<img src='img/Leo21.jpeg'>" ;
 
 //------------------ KARTE 17 -----------------------
@@ -178,6 +178,8 @@ let headers = [header_card_1_A, header_card_1_B, header_card_2_A, header_card_2_
  header_card_16_A, header_card_16_B, header_card_17_A, header_card_17_B, header_card_18_A, header_card_18_B, header_card_19_A, header_card_19_B, header_card_20_A, header_card_20_B,
  header_card_21_A, header_card_21_B, header_card_22_A, header_card_22_B, header_card_23_A, header_card_23_B, header_card_24_A, header_card_24_B, header_card_25_A, header_card_25_B,
  header_card_26_A, header_card_26_B, header_card_27_A, header_card_27_B, header_card_28_A, header_card_28_B ]
+
+
 let contents = [content_card_1_A, content_card_1_B, content_card_2_A, content_card_2_B, content_card_3_A, content_card_3_B, content_card_4_A, content_card_4_B, content_card_5_A, content_card_5_B,
  content_card_6_A, content_card_6_B, content_card_7_A, content_card_7_B, content_card_8_A, content_card_8_B, content_card_9_A, content_card_9_B, content_card_10_A, content_card_10_B,
  content_card_11_A, content_card_11_B, content_card_12_A, content_card_12_B, content_card_13_A, content_card_13_B, content_card_14_A, content_card_14_B, content_card_15_A, content_card_15_B,

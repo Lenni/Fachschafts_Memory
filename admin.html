@@ -13,11 +13,13 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-
 	<div class="admin_start_game">
 		<span id="admintext">
 				<h1>Du bist Spielleiter.</h1>
-				<button id="Start_Game" onclick="masterStart()">Raum öffnen</button>
+				<button id="Start_Game" onclick="masterStart()">Raum öffnen</button> <br>
+			<br>
+			<label for="card_counter"> Anzahl Kartenpaare: </label>
+				<input type="number" value="15" min="1" max="20" id="card_counter">
 		</span>
 	</div>
 
@@ -63,5 +65,7 @@
 <script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
 <script src="js/content.js"></script>
 <script src="js/app.js"></script>
+
+<script> gameState.admin = true;</script>
 </body>
 </html>

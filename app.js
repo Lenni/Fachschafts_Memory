@@ -44,7 +44,13 @@ io.sockets.on('connection', function (socket) {
     socket.on('alive', function (data){
         console.log("Keepalive");
         console.log(data);
-        io.in(data.room).emit('alive', data);
+        io.in(data.room).emit('fuck off', data);
+    });
+
+    socket.on('leave', function (data){
+        console.log("Leaving");
+        console.log(data);
+        io.in(data.room).emit('leave', data);
     });
 
     socket.on('start', function (data) {

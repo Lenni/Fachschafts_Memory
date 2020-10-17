@@ -35,15 +35,21 @@ class GameState{
     order;
     turn;
     active;
-
+    
+    admin;
     constructor() {
         this.moves = 0;
         this.game_start = false;
         this.timestamp = Date.now();
-        this.turn = 0;
+        this.turn = player_id;
         this.players = [];
         this.order = [];
         this.active = {};
+        this.admin = false;
+    }
+    
+    be_admin(){
+        this.admin = true;
     }
 
     sync(){
@@ -51,39 +57,52 @@ class GameState{
     }
 
     add_player(id, name){
-        this.players.push(name);
-        this.order.push(id);
 
-        if(this.turn === 0){
-            this.turn = id;
+        if(!this.game_start){
+            this.players.push(name);
+            this.order.push(id);
+
+            if(this.turn === 0){
+                this.turn = id;
+            }
+
+            this.update_player_list();
         }
-
-        this.update_player_list();
     }
 
     remove_player(id, name){
-        const index = this.players.indexOf(name);
-        const order_index = this.order.indexOf(id);
 
-        if (index > -1) {
-            this.players.splice(index, 1);
+        if(!this.game_start){
+            const index = this.players.indexOf(name);
+            const order_index = this.order.indexOf(id);
+
+            if (index > -1) {
+                this.players.splice(index, 1);
+            }
+
+            if (index > -1){
+                this.order.splice(order_index, 1);
+            }
+
+            this.update_player_list()
         }
-
-        if (index > -1){
-            this.order.splice(order_index, 1);
-        }
-
-        this.update_player_list()
-
     }
 
     purge_inactive(){
         if(this.players !== undefined){
             for(let i = 0; i < this.players.length; i++){
                 let player = this.players[i];
+                let id = this.order[i];
 
-                if(this.active[player.id] + 10000 > Date.now()){
-                    this.remove_player(player.id, player.name);
+                let ts = gameState.active[id];
+
+                console.log(id);
+                console.log(ts);
+                console.log(player);
+
+                if(ts + 10000 < Date.now() || ts === undefined){
+                    this.remove_player(id, player);
+                    this.update_player_list();
                 }
             }
         }
@@ -164,10 +183,34 @@ class GameState{
         }
 
         this.moves = data.moves;
-        this.players = data.players;
-        this.turn = data.turn;
-        this.order = data.order;
+        if(this.admin){
+            for(let i = 0; i < data.players.length; i++){
+
+                console.log(data.players[i]);
+
+                if(this.players.indexOf(data.players[i]) === -1){
+                    this.players.push(data.players[i]);
+                }else{
+
+                }
+
+                if(this.order.indexOf(data.order[i]) === -1){
+                    this.order.push(data.order[i]);
+                }else{
+
+                }
+            }
+        }else{
+            this.players = data.players;
+            this.order = data.order;
+        }
+
+
         this.game_start = data.game_start;
+
+        if(data.turn !== 0){
+            this.turn = data.turn;
+        }
 
 
         this.updateUI();
@@ -194,7 +237,6 @@ class GameState{
 }
 
 let gameState = new GameState();
-
 
 class Card{
     id;
@@ -250,12 +292,15 @@ class Card{
         }
 
         if(this.unmatched){
-
+            disable();
             this.play_unmatch_animation();
             let t = this;
+
             setTimeout(function () {
                 t.play_cover_animation();
             }, 1000);
+
+            setTimeout(function (){enable()}, 1500);
         }
     }
 
@@ -267,7 +312,19 @@ class Card{
             this.play_open_animation();
         }
         disable();
-        setTimeout(function (){ enable()}, 1000);
+        if(gameState.cardDeck.opened_cards.length === 2){
+            if(gameState.turn === player_id){
+                setTimeout(function (){ enable()}, 4000);
+            }else{
+                disable();
+            }
+        }else{
+            if(gameState.turn === player_id){
+                setTimeout(function (){ enable()}, 500);
+            }else{
+                disable();
+            }
+        }
     }
 
     play_open_animation(){
@@ -356,10 +413,35 @@ class CardDeck{
         }
     }
 
+    shorten(card_no){
+        let overflow = (this.card_no/2) - (card_no/2);
+
+        for(let i = 0; i < overflow; i++){
+            let random_card = Math.floor(Math.random()*(this.card_no/2));
+
+            let partner_card_id = this.Cards[random_card].partner_id
+
+            console.log(random_card);
+            console.log(this.Cards[random_card]);
+
+            this.Cards.splice(random_card, 1);
+
+            for(let i = 0; i < this.Cards.length; i++){
+                if(this.Cards[i].id === partner_card_id){
+                    this.Cards.splice(i, 1);
+                }
+            }
+
+            this.card_no = this.Cards.length;
+        }
+    }
+
     open_card(id, sync){
 
         this.opened_cards.push(this.Cards[id]);
         this.Cards[id].open_card();
+
+        console.log(this.opened_cards);
 
         let t = this;
 
@@ -368,13 +450,15 @@ class CardDeck{
         }
 
         if(this.opened_cards.length === 2){
+
+            disable();
             gameState.moves++;
             this.opened_cards[1].DOMElement.classList.add("prio");
 
             setTimeout(function (){
             if (t.opened_cards[0].id === t.opened_cards[1].partner_id) {
 
-                t.matched()
+                t.matched();
                 my_cards = 0;
                 for(let i = 0; i < gameState.cardDeck.length;i++){
                     if(gameState.cardDeck.Cards[i].owner === player_name){
@@ -384,14 +468,16 @@ class CardDeck{
             } else {
                 t.unmatched();
             }
+
             if(sync){
                 gameState.sync();
             }
-            }, 1000);
+            }, 4000);
         }
     }
 
     matched() {
+        disable();
 
         this.opened_cards[0].play_match_animation();
         this.opened_cards[1].play_match_animation();
@@ -415,10 +501,13 @@ class CardDeck{
 
         this.opened_cards = [];
 
+        setTimeout(function (){enable()}, 1000);
+
         gameState.sync();
     }
 
     unmatched() {
+        disable();
         this.opened_cards[0].play_unmatch_animation();
         this.opened_cards[1].play_unmatch_animation();
 
@@ -433,22 +522,27 @@ class CardDeck{
         let c = this.opened_cards;
         let t = this;
 
+        this.opened_cards = [];
+
+        gameState.sync();
+
         setTimeout(function () {
             c[0].play_cover_animation();
             c[1].play_cover_animation();
-            disable();
             c[0].unmatched= false;
             c[1].unmatched= false;
             t.opened_cards = [];
             gameState.sync();
 
+        }, 1000);
+
+        setTimeout(function (){
             if(player_id === gameState.turn){
                 enable();
             }else{
                 disable();
             }
-
-        }, 1000);
+        }, 1500);
     }
 
     generateDOM(){
@@ -483,7 +577,7 @@ class CardDeck{
 
 
 
-setInterval(gameState.purge_inactive, 5000);
+//setInterval(gameState.purge_inactive, 5000);
 
 socket.on("sync", function (data){
     console.log(data)
@@ -504,15 +598,21 @@ socket.on("join", function (data){
     gameState.add_player(data.id, data.name);
     setTimeout(function (){
         gameState.sync();
-    }, 200);
+    }, 400);
 });
 
 socket.on("leave", function (data){
+
     gameState.remove_player(data.id, data.name);
+
     setTimeout(function (){
         gameState.sync();
-    }, 200);
+    }, 400);
 });
+
+function admin(){
+    gameState.be_admin();
+}
 
 function leaveGame(){
 
@@ -527,15 +627,14 @@ function leaveGame(){
 
     gameState.remove_player(player_id, player_name);
 
-    if(document.getElementById("game-code").value !== ""){
-        room = document.getElementById("game-code").value;
-    }else{
-        room = "default";
-    }
 
     player_name = document.getElementById("player-name").value;
 
+    gameState = new GameState();
+
     socket.emit("leave",{"id": player_id, "name": player_name, "room": room});
+
+    room = "";
 }
 
 function joinGame(){
@@ -559,7 +658,7 @@ function joinGame(){
 
     socket.emit("join",{"id": player_id, "name": player_name, "room": room});
 
-    setInterval(sendKeepalive, 10000);
+    gameState.sync();
 }
 
 
@@ -578,11 +677,14 @@ function masterStart() {
     */
 
     let cd = new CardDeck(ids, contents, headers);
+    let card_number = document.getElementById("card_counter").value;
+
+    cd.shorten(card_number*2);
 
     cd.shuffle();
     gameState.cardDeck = cd;
     gameState.game_start = true;
-    gameState.sync();
+    gameState.admin = true;
 
     socket.emit("start", {"room": room});
 
@@ -599,9 +701,11 @@ function startGame(_cards) {
 
     deck_holder.appendChild(gameState.cardDeck.DOMElement);
 
-    // reset moves
-    moves = 0;
-    //counter.innerHTML = moves;
+    if(gameState.turn === player_id){
+        enable();
+    }else{
+        disable();
+    }
 
     gameState.sync();
 }
