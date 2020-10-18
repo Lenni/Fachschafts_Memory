@@ -36,6 +36,14 @@ header {
 	display: block;
 }
 
+img.hide {
+	width: 0px;
+}
+
+img.dis {
+	width: 20px;
+}
+
 div {
 	margin: 0px;
 }
