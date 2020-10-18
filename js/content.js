@@ -134,7 +134,7 @@ let content_card_22_B = "<strong> Prof. Dr. Nils Neuber </strong> ist Studiendek
 //------------------ KARTE 23 -----------------------
 let header_card_23_A = "<strong> Prof. Dr. Michael Krüger </strong>";
 let header_card_23_B = "";
-let content_card_23_A = "<img id = 'img' class = 'hide img-thumbnail' src='img/Krüger.jpeg'>";
+let content_card_23_A = "<img id = 'img' class = 'hide img-thumbnail' src='img/Krueger.jpeg'>";
 let content_card_23_B = "<strong> Prof. Dr. Michael Krüger </strong> leitet den Arbeitsbereich Sportpädagogik und Sportgeschichte." ;
 
 //------------------ KARTE 24 -----------------------
