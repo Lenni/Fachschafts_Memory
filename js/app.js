@@ -330,8 +330,12 @@ class Card{
     play_open_animation(){
         this.DOMElement.classList.add("open");
         this.DOMElement.classList.add("show");
-        this.DOMElement.getElementsByTagName("img")[0].classList.remove("hide");
-        this.DOMElement.getElementsByTagName("img")[0].classList.add("dis");
+        try{
+            this.DOMElement.getElementsByTagName("img")[0].classList.remove("hide");
+            this.DOMElement.getElementsByTagName("img")[0].classList.add("dis");
+        }catch (e) {
+
+        }
     }
 
     play_match_animation(){
@@ -370,8 +374,13 @@ class Card{
 
         this.DOMElement.classList.remove("show", "unmatched", "open", "disabled", "no-anim");
 
-        this.DOMElement.getElementsByTagName("img")[0].classList.add("hide");
-        this.DOMElement.getElementsByTagName("img")[0].classList.remove("dis");
+        try{
+            this.DOMElement.getElementsByTagName("img")[0].classList.add("hide");
+            this.DOMElement.getElementsByTagName("img")[0].classList.remove("dis");
+        }catch (e){
+
+        }
+
     }
 
     display_owner(){
