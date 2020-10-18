@@ -58,6 +58,10 @@ body {
 	font-size: 16px;
 }
 
+.image{
+	display: none;
+}
+
 input {
 	padding: 0px;
 	margin: 0px;
@@ -233,6 +237,7 @@ h1 {
 	-webkit-backface-visibility: visible !important;
 	backface-visibility: visible !important;
 	animation-duration: .45s;
+	display: block !important;
 }
 
 .deck .card.open.prio {
@@ -241,7 +246,9 @@ h1 {
 
 .deck .card.show {
 	font-size: 10px;
+	display: block !important;
 }
+
 
 .deck .card.match {
 	transform: scale(1);
