@@ -37,11 +37,11 @@ header {
 }
 
 img.hide {
-	width: 0px;
+	display: none;
 }
 
 img.dis {
-	width: 20px;
+	display: block;
 }
 
 div {
