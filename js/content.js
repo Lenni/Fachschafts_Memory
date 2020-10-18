@@ -2,19 +2,14 @@
 let header_card_1_A = "<strong> FBR </strong>";
 let header_card_1_B = "<strong> Fachbereichsrat </strong>";
 let content_card_1_A = "";
-let content_card_1_B = "Der <strong> FBR </strong> ist das höchste Gremium am Fachbereich 07 und setzt sich aus den beiden" +
-    "Instituten Sport und Psychologie zusammen. Hier wird über alle wichtigen" +
-    "Entscheidungen wie z.B. neue ProfessorInnen etc. abgestimmt. (Beschlussfassendes" +
-    "Organ)";
+let content_card_1_B = "Der <strong> FBR </strong> ist das höchste Gremium am Fachbereich 07 und setzt sich aus den beiden Instituten Sport und Psychologie zusammen. Hier wird über alle wichtigen Entscheidungen wie z.B. neue ProfessorInnen etc. abgestimmt. (Beschlussfassendes Organ)";
 
 
 //------------------ KARTE 2 -----------------------
 let header_card_2_A = "<strong> KLsA </strong>";
 let header_card_2_B = "<strong> Kommission für Lehre und studentische Angelegenheiten </strong>";
 let content_card_2_A = "";
-let content_card_2_B = "Die <strong> KLsA </strong> beschäftigt sich mit jeglichen studentischen Angelegenheiten, wie z.B." +
-    "Lehrangebot der nächsten Semester, Stellenausschreibungen und -besetzungen, etc." +
-    "(Beratendes Gremium für den StuBei)";
+let content_card_2_B = "Die <strong> KLsA </strong> beschäftigt sich mit jeglichen studentischen Angelegenheiten, wie z.B. Lehrangebot der nächsten Semester, Stellenausschreibungen und -besetzungen, etc. (Beratendes Gremium für den StuBei)";
 
 //------------------ KARTE 3 -----------------------
 let header_card_3_A = "<strong> StuBei </strong>";
@@ -35,7 +30,7 @@ let content_card_5_A = "";
 let content_card_5_B = "Die Abkürzung IfS steht nicht nur im Allgemeinen für unser Institut. In der Fachschaftsarbeit wird so das richtungsweisende Gremium des Instituts abgekürzt. Hier treffen sich alle Vorstandsmitglieder der verschiedenen Gruppen des Instituts und es wird die politische Ausrichtung besprochen.";
 
 //------------------ KARTE 6 -----------------------
-let header_card_6_A = "<strong> ILF-Party </strong>";
+let header_card_6_A = "<strong> IFL-Party </strong>";
 let header_card_6_B = "<strong> Institut für Leibesübungen Party </strong>";
 let content_card_6_A = "<img class = 'card-img  image 'src='img/IFL.jpeg'>";
 let content_card_6_B = "Die IFL Party findet einmal im Semester statt. Hier trifft sich die Elite der Studierendenschaft (hauptsächlich Sportstudierende) und verköstigt isotonische Kaltgetränke. Dies ist eine Pflichtveranstaltung";
@@ -53,8 +48,8 @@ let content_card_8_A = "<img id = 'img' class = 'hide'src='img/Beachparty.jpeg'>
 let content_card_8_B = "Die Beach-Party* findet im Sommersemester vor der Fachschaft statt. Neben einer gemütlichen sommerlichen Atmosphäre sorgen geeignete Getränke für das Strand-Feeling";
 
 //------------------ KARTE 9 -----------------------
-let header_card_9_A = "<strong> Merchanhidee </strong>";
-let header_card_9_B = "<strong> Merchanhidee </strong>";
+let header_card_9_A = "<strong> Merchandise </strong>";
+let header_card_9_B = "<strong> Merchandise </strong>";
 let content_card_9_A = "<img id = 'img' class = 'hide'src='img/Merch.jpeg'>";
 let content_card_9_B = "Einmal im Jahr, meist kurz vor Weihnachten, haben die Studierenden die Möglichkeit sich die trendigen Uniformen des Campus zu bestellen.";
 
@@ -86,7 +81,7 @@ let content_card_13_B = "<img id = 'img' class = 'hide'src='img/LAH.jpeg'>" ;
 let header_card_14_A = "<strong> Ho01 </strong>";
 let header_card_14_B = "<strong> Größter Seminarraum im Horstmarer Landweg 50 </strong>";
 let content_card_14_A = "";
-let content_card_14_B = "<im class = 'card-img  image'g src='img/Ho01.jpeg'>" ;
+let content_card_14_B = "<img class = 'hide' src='img/Ho01.jpeg'>" ;
 
 //------------------ KARTE 15 -----------------------
 let header_card_15_A = "<strong> Fl018 </strong>";
@@ -126,19 +121,19 @@ let content_card_20_B = "<img id = 'img' class = 'hide'src='img/Hausis.jpeg'>" ;
 
 //------------------ KARTE 21 -----------------------
 let header_card_21_A = "<strong> Studiengagnskoordinatoren Dr. Neil van Bentem, Dr. Dennis Dreiskämper  </strong>";
-let header_card_21_B = "<strong>  </strong>";
+let header_card_21_B = "";
 let content_card_21_A = "<img id = 'img' class = 'hide'src='img/Neil.jpeg'><img id = 'img' class = 'hide'src='img/Dennis.jpeg'>";
 let content_card_21_B = "<strong> Dr. Neil van Bentem </strong> kümmert sich um alle Lehramtsbezogenen Studiengänge und ist der Chef des Service Centers. </strong> Dr. Dennis Dreiskämper <strong> kümmert sich um die Science Studiengänge im Bachelor und Master und ist sein Vertreter im SC" ;
 
 //------------------ KARTE 22 -----------------------
 let header_card_22_A = "<strong> Prof. Dr. Nils Neuber </strong>";
-let header_card_22_B = "<strong>  </strong>";
+let header_card_22_B = "";
 let content_card_22_A = "<img id = 'img' class = 'hide'src='img/Nils.jpeg'>";
 let content_card_22_B = "<strong> Prof. Dr. Nils Neuber </strong> ist Studiendekan des Fachbereichs 07. Er leitet am Institut den Arbeitsbereich Bildung und Unterricht im Sport." ;
 
 //------------------ KARTE 23 -----------------------
 let header_card_23_A = "<strong> Prof. Dr. Michael Krüger </strong>";
-let header_card_23_B = "<strong>  </strong>";
+let header_card_23_B = "";
 let content_card_23_A = "<img id = 'img' class = 'hide'src='img/Krüger.jpeg'>";
 let content_card_23_B = "<strong> Prof. Dr. Michael Krüger </strong> leitet den Arbeitsbereich Sportpädagogik und Sportgeschichte." ;
 
@@ -150,25 +145,25 @@ let content_card_24_B = "Das Service Center ist die erste Anlaufstelle bei Frage
 
 //------------------ KARTE 25 -----------------------
 let header_card_25_A = "<strong> Prof. Dr. Claudia Voelcker-Rehage </strong>";
-let header_card_25_B = "<strong>  </strong>";
+let header_card_25_B = "";
 let content_card_25_A = "<img id = 'img' class = 'hide'src='img/Claudia.jpeg'>" ;
 let content_card_25_B = " <strong> Prof. Dr. Claudia Voelcker-Rehage </strong> leitet den Arbeitsbereich Neuromotorik und Training." ;
 
 //------------------ KARTE 26 -----------------------
 let header_card_26_A = "<strong> Prof. Dr. Heiko Wagner </strong>";
-let header_card_26_B = "<strong>  </strong>";
+let header_card_26_B = "";
 let content_card_26_A = "<img id = 'img' class = 'hide'src='img/Heiko.jpeg'>";
 let content_card_26_B = " <strong> Prof. Dr. Heiko Wagner </strong> leitet den Arbeitsbereich Bewegungswissenschaft" ;
 
 //------------------ KARTE 27 -----------------------
 let header_card_27_A = "<strong> Prof. Dr. Berns Strauß </strong>";
-let header_card_27_B = "<strong>  </strong>";
+let header_card_27_B = "";
 let content_card_27_A = "<img id = 'img' class = 'hide'src='img/Strauß.jpeg'>";
 let content_card_27_B = " <strong> Prof. Dr. Bernd Strauß </strong> leitet den Arbeitsbereich Sportpsychologie." ;
 
 //------------------ KARTE 28 -----------------------
 let header_card_28_A = "<strong> Prof. Dr. Henk Eric Meier </strong>";
-let header_card_28_B = "<strong>  </strong>";
+let header_card_28_B = "";
 let content_card_28_A = "<img id = 'img' class = 'hide'src='img/Henk.jpeg'>";
 let content_card_28_B = " <strong> Prof. Dr. Henk Erik Meier <strong> leitet den Arbeitsbereich Sozialwissenschaften des Sports." ;
 
