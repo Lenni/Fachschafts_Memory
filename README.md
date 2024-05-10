@@ -13,3 +13,7 @@ You can enter a Game Code, and play against a friend!
 ### About
 
 I wrote this project because i was asked by a friend to do it in less than two weeks, so don't expect pretty code or assume that i know what I'm doing.
+
+## License
+
+All rights Reserved/ Alle Rechte vorbehalten!
